@@ -1,0 +1,17 @@
+version: '2.1'
+
+services:
+  redis:
+    image: 'redis:3.0-alpine'
+    ports:
+      - '6379:6379'
+  sanic_ex:
+    image: sanic_ex
+    build: .
+    ports:
+      - 5000:5000
+    volumes:
+      - .:/app
+    depends_on: 
+      - redis
+  
