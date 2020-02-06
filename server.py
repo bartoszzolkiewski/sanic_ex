@@ -18,7 +18,6 @@ if __name__ == "__main__":
     })
     redis = SanicRedis()
     redis.init_app(app)
-
     for module_name in MODULES:
         module = import_module(module_name)
         print("Initializing route %s" % module.blueprint)
