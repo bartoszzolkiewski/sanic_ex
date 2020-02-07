@@ -1,1 +1,0 @@
-from .routes import app_router as blueprint

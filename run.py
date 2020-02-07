@@ -1,16 +1,15 @@
 from sanic import Sanic
 from sanic_redis import SanicRedis
+import sys
 from aoiklivereload import LiveReloader
 
-from common.config import MODULES
+from app.config import MODULES, APP_CONFIG
 from importlib import import_module
 
 
+app = Sanic(__name__)
+
 if __name__ == "__main__":
-    reloader = LiveReloader()
-    reloader.start_watcher_thread()
-    
-    app = Sanic(__name__)
     app.config.update({
         'REDIS': {
             'address': ('redis', 6379),
@@ -18,9 +17,10 @@ if __name__ == "__main__":
     })
     redis = SanicRedis()
     redis.init_app(app)
+
     for module_name in MODULES:
         module = import_module(module_name)
-        print("Initializing route %s" % module.blueprint)
+        print("Initializing route for module: %s" % module.__name__)
         app.blueprint(module.blueprint)
 
-    app.run(host="0.0.0.0", port=5000)
+    app.run(**APP_CONFIG)

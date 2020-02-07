@@ -1,11 +1,11 @@
 from sanic import Blueprint
 from sanic.response import json
 
-from common.cache import CacheHandler
+from app.cache import CacheHandler
 
-app_router = Blueprint('app', url_prefix='/',)
+cms_router = Blueprint('cms', url_prefix='/',)
 
-@app_router.route('/home', methods=['GET'])
+@cms_router.route('/', methods=['GET'])
 async def home(request):
     cache_handler = CacheHandler(request)
     counter_name = 'hits'

@@ -1,0 +1,1 @@
+from .routes import cms_router as blueprint
